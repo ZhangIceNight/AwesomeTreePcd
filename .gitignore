@@ -6,3 +6,8 @@ checkpoints/
 *.laz
 *.ply
 .DS_Store
+# 忽略 data 文件夹下所有内容
+data/*
+
+# 但保留 data/.gitkeep 或空文件夹结构
+!data/.gitkeep
