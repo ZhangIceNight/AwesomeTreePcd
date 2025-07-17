@@ -49,7 +49,7 @@ def read_species_file(species_path):
     return file_to_label, label_to_id
 
 
-def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1024, log_file='process_log.txt'):
+def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1024, log_file='process_ply2h5_log.txt'):
     # 读取 Species 文件
     file_to_label, label_to_id = read_species_file(species_path)
  
@@ -62,21 +62,20 @@ def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1
  
     with open(log_file, 'a') as log_f:  # 创建日志文件
         for filename in tqdm(ply_files, desc="Processing .ply files", total=total_files):
-            try:
-                file_id = os.path.splitext(filename)[0]  # 去掉后缀
-                label = file_to_label.get(file_id)
+            file_id = os.path.splitext(filename)[0]  # 去掉后缀
+            label = file_to_label.get(file_id)
 
-                # 读取并采样点云数据
-                filepath = os.path.join(ply_dir, filename)
-                points = read_ply(filepath)
-                if points is not None:
-                    sampled = farthest_point_sampling(points, num_samples)
-                    all_points.append(sampled)
-                    all_labels.append(label)
+            # 读取并采样点云数据
+            filepath = os.path.join(ply_dir, filename)
+            points = read_ply(filepath)
+            if points is not None and label is not None:
+                sampled = farthest_point_sampling(points, num_samples)
+                all_points.append(sampled)
+                all_labels.append(label)
                 # 尝试保存
                 log_f.write(f"[SUCCESS] {filename}\n")
-            except Exception as e:
-                log_f.write(f"[FAILED] {filename} -> {str(e)}\n")
+            else:
+                log_f.write(f"[FAILED] {filename}\n")
  
     # 转换为 NumPy 数组
     all_points = np.array(all_points, dtype=np.float32)  # (N, 1024, 3)
