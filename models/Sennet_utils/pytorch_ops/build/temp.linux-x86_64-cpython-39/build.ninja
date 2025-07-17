@@ -1,0 +1,27 @@
+ninja_required_version = 1.3
+cxx = c++
+
+cflags = -pthread -B /public/wjzhang/envs/pointmamba/compiler_compat -Wno-unused-result -Wsign-compare -DNDEBUG -O2 -Wall -fPIC -O2 -isystem /public/wjzhang/envs/pointmamba/include -I/public/wjzhang/envs/pointmamba/include -fPIC -O2 -isystem /public/wjzhang/envs/pointmamba/include -fPIC -I/home/wjzhang/myenvs/pointmamba/lib/python3.9/site-packages/torch/include -I/home/wjzhang/myenvs/pointmamba/lib/python3.9/site-packages/torch/include/torch/csrc/api/include -I/home/wjzhang/myenvs/pointmamba/lib/python3.9/site-packages/torch/include/TH -I/home/wjzhang/myenvs/pointmamba/lib/python3.9/site-packages/torch/include/THC -I/public/wjzhang/envs/pointmamba/include/python3.9 -c
+post_cflags = -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=batch_find_neighbors -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++17
+cuda_dlink_post_cflags = 
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+
+
+
+
+build /home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/build/temp.linux-x86_64-cpython-39/batch_find_neighbors.o: compile /home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/batch_find_neighbors.cpp
+build /home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/build/temp.linux-x86_64-cpython-39/cpp_utils/cloud/cloud.o: compile /home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/cpp_utils/cloud/cloud.cpp
+build /home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/build/temp.linux-x86_64-cpython-39/neighbors/neighbors.o: compile /home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/neighbors/neighbors.cpp
+
+
+
+
+
+
+

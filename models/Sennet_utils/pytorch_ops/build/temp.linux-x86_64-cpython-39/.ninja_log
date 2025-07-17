@@ -1,0 +1,4 @@
+# ninja log v5
+1	4582	1752482296151133743	/home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/build/temp.linux-x86_64-cpython-39/cpp_utils/cloud/cloud.o	27b6744d653c4dbf
+1	5243	1752482296815140118	/home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/build/temp.linux-x86_64-cpython-39/neighbors/neighbors.o	1e44d456a7a2e9ec
+0	64440	1752482355983700751	/home/wjzhang/workspace/codes/AwesomeTreePcd/models/Sennet_utils/pytorch_ops/build/temp.linux-x86_64-cpython-39/batch_find_neighbors.o	9915a51b4d905288
