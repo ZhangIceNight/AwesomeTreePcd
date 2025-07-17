@@ -3,6 +3,7 @@ import numpy as np
 import h5py
 from pyntcloud import PyntCloud
 from tqdm import tqdm
+import json
 
 def read_ply(filepath):
     try:
@@ -48,44 +49,53 @@ def read_species_file(species_path):
     return file_to_label, label_to_id
 
 
-def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1024):
+def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1024, log_file='process_log.txt'):
     # 读取 Species 文件
-    file_to_label = read_species_file(species_path)
-
+    file_to_label, label_to_id = read_species_file(species_path)
+ 
     # 收集所有 ply 文件
     ply_files = [f for f in os.listdir(ply_dir) if f.lower().endswith('.ply')]
     total_files = len(ply_files)
-
+ 
     all_points = []
     all_labels = []
-    
-    for filename in tqdm(ply_files, desc="Processing .ply files", total=total_files):
-        file_id = os.path.splitext(filename)[0]  # 去掉后缀，比如 "cloud_0.ply" → "cloud_0"
-        label = file_to_label.get(file_id, 0)     # 默认标签为 0，也可设为 -1 或忽略
+ 
+    with open(log_file, 'a') as log_f:  # 创建日志文件
+        for filename in tqdm(ply_files, desc="Processing .ply files", total=total_files):
+            try:
+                file_id = os.path.splitext(filename)[0]  # 去掉后缀
+                label = file_to_label.get(file_id)
 
-        # 读取点云数据
-        filepath = os.path.join(ply_dir, filename)
-        points = read_ply(filepath)
-        if points is not None and file_id in file_to_label:
-            sampled = farthest_point_sampling(points, num_samples)
-            all_points.append(sampled)
-            all_labels.append(label)
-
-    # 转换成 NumPy 数组
+                # 读取并采样点云数据
+                filepath = os.path.join(ply_dir, filename)
+                points = read_ply(filepath)
+                if points is not None:
+                    sampled = farthest_point_sampling(points, num_samples)
+                    all_points.append(sampled)
+                    all_labels.append(label)
+                # 尝试保存
+                log_f.write(f"[SUCCESS] {filename}\n")
+            except Exception as e:
+                log_f.write(f"[FAILED] {filename} -> {str(e)}\n")
+ 
+    # 转换为 NumPy 数组
     all_points = np.array(all_points, dtype=np.float32)  # (N, 1024, 3)
-    all_labels = np.array(all_labels, dtype=np.int32)    # (N,)
-
+    all_labels = np.array(all_labels, dtype=np.int32)     # (N,)
+ 
     # 写入 HDF5
     with h5py.File(hdf5_path, 'w') as f:
         f.create_dataset('points', data=all_points)
         f.create_dataset('labels', data=all_labels)
         f.attrs['num_samples'] = num_samples
         f.attrs['num_classes'] = len(set(all_labels))
+        f.attrs['label_map'] = json.dumps(label_to_id, ensure_ascii=False)  # 将 label_to_id 字典转换为 JSON 字符串，存入 HDF5 文件属性中
 
-    print(f"Saved {len(all_points)} point clouds with labels to {hdf5_path}")
+
+    print(f"Saved {len(all_points)} point clouds to {hdf5_path}")
+    print(f"Species map is: {label_to_id}")
 
 if __name__ == '__main__':
-    ply_dir = "/home/wjzhang/workspace/datasets/PLS_AUT_ply_normalized"       # 替换为你的 PLY 文件夹路径
+    ply_dir = "/home/wjzhang/workspace/datasets/PLS_AUT_ply_normalized_tiny"       # 替换为你的 PLY 文件夹路径
     species_path = "/home/wjzhang/workspace/datasets/PLS_AUT_Species/species.txt"      # 替换为你的 species.txt 路径
     hdf5_path = "/home/wjzhang/workspace/datasets/PLU_AUT_sample1024_xyzlbs.h5"
 
