@@ -76,7 +76,7 @@ def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1
                 log_f.write(f"[SUCCESS] {filename}\n")
             else:
                 log_f.write(f"[FAILED] {filename}\n")
- 
+    print(all_labels)
     # 转换为 NumPy 数组
     all_points = np.array(all_points, dtype=np.float32)  # (N, 1024, 3)
     all_labels = np.array(all_labels, dtype=np.int32)     # (N,)
