@@ -16,5 +16,3 @@ git commit -m "%commit_message%"
 git push
 
 echo 已完成推送！提交信息：%commit_message%
-
-pause
