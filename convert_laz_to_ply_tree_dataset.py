@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import laspy
-from pyntcloud import PyntCloud
+import open3d as o3d
 from tqdm import tqdm
 
 def read_laz(filepath):
@@ -25,8 +25,9 @@ def normalize_pc(pc):
 def save_ply(pc, save_path):
     if pc is None or len(pc) == 0:
         return
-    cloud = PyntCloud.from_array(pc)
-    cloud.to_file(save_path)
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(pc)
+    o3d.io.write_point_cloud(save_path)
 
 def process_dataset(input_dir, output_dir, log_file='process_log.txt'):
     if not os.path.exists(output_dir):
