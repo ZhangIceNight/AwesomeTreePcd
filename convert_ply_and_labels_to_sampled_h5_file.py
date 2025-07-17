@@ -58,7 +58,7 @@ def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1
 
     all_points = []
     all_labels = []
-
+    
     for filename in tqdm(ply_files, desc="Processing .ply files", total=total_files):
         file_id = os.path.splitext(filename)[0]  # 去掉后缀，比如 "cloud_0.ply" → "cloud_0"
         label = file_to_label.get(file_id, 0)     # 默认标签为 0，也可设为 -1 或忽略
