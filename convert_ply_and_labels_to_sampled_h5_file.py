@@ -85,8 +85,8 @@ def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1
     print(f"Saved {len(all_points)} point clouds with labels to {hdf5_path}")
 
 if __name__ == '__main__':
-    ply_dir = "/path/to/your/ply/folder"       # 替换为你的 PLY 文件夹路径
-    species_path = "/path/to/species.txt"      # 替换为你的 species.txt 路径
-    hdf5_path = "all_pointclouds_with_labels.h5"
+    ply_dir = "/home/wjzhang/workspace/datasets/PLS_AUT_ply_normalized"       # 替换为你的 PLY 文件夹路径
+    species_path = "/home/wjzhang/workspace/datasets/PLS_AUT_Species/species.txt"      # 替换为你的 species.txt 路径
+    hdf5_path = "/home/wjzhang/workspace/datasets/PLU_AUT_sample1024_xyzlbs.h5"
 
     save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path)
