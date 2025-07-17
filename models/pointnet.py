@@ -1,5 +1,3 @@
-# models/pointnet.py
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -71,12 +69,6 @@ class PointNetCls(nn.Module):
         x = F.relu(self.bn4(self.fc1(x)))
         x = F.relu(self.bn5(self.dropout(self.fc2(x))))
         x = self.fc3(x)
-        return x, trans
+        return x
 
 
-def get_model(num_classes, normal_channel=False):
-    return PointNetCls(k=num_classes, normal_channel=normal_channel)
-
-
-def get_loss(pred, target, trans_feat=None):
-    return F.cross_entropy(pred, target)
