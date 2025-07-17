@@ -43,7 +43,8 @@ def read_species_file(species_path):
             if category not in label_to_id:
                 label_to_id[category] = current_id
                 current_id += 1
-
+            
+            filename_id = filename_id.strip('"')  # 去引号操作
             file_to_label[filename_id] = label_to_id[category]
 
     return file_to_label, label_to_id
