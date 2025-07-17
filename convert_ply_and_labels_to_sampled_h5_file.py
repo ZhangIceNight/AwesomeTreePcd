@@ -66,8 +66,6 @@ def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1
             file_id = os.path.splitext(filename)[0]  # 去掉后缀
             label = file_to_label.get(file_id)
 
-            print(f"file_id:{file_id}")
-            print(f"label:{label}")
             # 读取并采样点云数据
             filepath = os.path.join(ply_dir, filename)
             points = read_ply(filepath)
@@ -79,7 +77,7 @@ def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1
                 log_f.write(f"[SUCCESS] {filename}\n")
             else:
                 log_f.write(f"[FAILED] {filename}\n")
-    # print(file_to_label)
+    
     # 转换为 NumPy 数组
     all_points = np.array(all_points, dtype=np.float32)  # (N, 1024, 3)
     all_labels = np.array(all_labels, dtype=np.int32)     # (N,)
@@ -97,7 +95,7 @@ def save_ply_with_labels_to_hdf5(ply_dir, species_path, hdf5_path, num_samples=1
     print(f"Species map is: {label_to_id}")
 
 if __name__ == '__main__':
-    ply_dir = "/home/wjzhang/workspace/datasets/PLS_AUT_ply_normalized_tiny"       # 替换为你的 PLY 文件夹路径
+    ply_dir = "/home/wjzhang/workspace/datasets/PLS_AUT_ply_normalized"       # 替换为你的 PLY 文件夹路径
     species_path = "/home/wjzhang/workspace/datasets/PLS_AUT_Species/species.txt"      # 替换为你的 species.txt 路径
     hdf5_path = "/home/wjzhang/workspace/datasets/PLU_AUT_sample1024_xyzlbs.h5"
 
