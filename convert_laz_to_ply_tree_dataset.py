@@ -27,7 +27,7 @@ def save_ply(pc, save_path):
         return
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(pc)
-    o3d.io.write_point_cloud(save_path)
+    o3d.io.write_point_cloud(filename=save_path,pointcloud=pcd)
 
 def process_dataset(input_dir, output_dir, log_file='process_log.txt'):
     if not os.path.exists(output_dir):
