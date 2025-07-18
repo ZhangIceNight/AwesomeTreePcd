@@ -15,4 +15,4 @@ trainer:
   log_every_n_steps: 10
   enable_checkpointing: True
   precision: 32
-  default_root_dir: "experiments/"
+  default_root_dir: "Results/"

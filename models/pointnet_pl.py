@@ -35,7 +35,7 @@ class PointCloudModel(pl.LightningModule):
         }
 
     def configure_optimizers(self):
-        return optim.Adam(self.parameters(), lr=self.hparams.model_hparams["learning_rate"])
+        return optim.Adam(self.parameters(), lr=self.model_hparams["learning_rate"])
 
 
  
