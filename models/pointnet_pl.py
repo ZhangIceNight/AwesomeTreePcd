@@ -10,7 +10,9 @@ class PointCloudModel(pl.LightningModule):
         self.model_hparams = model_hparams
         self.model = PointNetCls(num_classes=self.model_hparams['num_classes'])
         self.loss_fn = nn.CrossEntropyLoss()
-        print("lr: ",self.model_hparams["learning_rate"])
+        print(f"LR Type: {type(self.model_hparams['learning_rate'])}")
+        print(f"LR Value: {self.model_hparams['learning_rate']}")
+
     def training_step(self, batch, batch_idx):
         points, labels = batch
         logits = self.model(points)
