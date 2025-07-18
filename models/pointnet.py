@@ -55,6 +55,7 @@ class PointNetCls(nn.Module):
         self.dropout = nn.Dropout(p=0.3)
 
     def forward(self, x):
+        x = x.transpose(2,1) # from [B,N,C] -> [B,C,N] to fit the previous writing style in PointNet
         B, D, N = x.size()
         trans = self.stn(x[:, :3, :])
         x = x.transpose(2, 1)
