@@ -8,6 +8,7 @@ model:
   num_classes: 9
   learning_rate: 0.001
   model_type:"pointnet"
+  
 trainer:
   max_epochs: 50
   accelerator: "gpu"
