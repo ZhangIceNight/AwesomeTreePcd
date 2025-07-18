@@ -35,7 +35,7 @@ class STN3d(nn.Module):
 
 
 class PointNetCls(nn.Module):
-    def __init__(self, k=9, normal_channel=False):
+    def __init__(self, num_classes=9, normal_channel=False):
         super(PointNetCls, self).__init__()
         in_channel = 6 if normal_channel else 3
         self.stn = STN3d()
@@ -44,7 +44,7 @@ class PointNetCls(nn.Module):
         self.conv3 = nn.Conv1d(128, 1024, 1)
         self.fc1 = nn.Linear(1024, 512)
         self.fc2 = nn.Linear(512, 256)
-        self.fc3 = nn.Linear(256, k)
+        self.fc3 = nn.Linear(256, num_classes)
 
         self.bn1 = nn.BatchNorm1d(64)
         self.bn2 = nn.BatchNorm1d(128)
