@@ -19,15 +19,15 @@ class TreeSpeciesDataset(Dataset):
         return torch.as_tensor(point_cloud), torch.as_tensor(label).long()
 
 class TreeDataModule(LightningDataModule):
-    def __init__(self, hdf5_path, batch_size=32, num_workers=4, val_split=0.1):
+    def __init__(self, data_dir, batch_size=32, num_workers=4, val_split=0.1):
         super().__init__()
-        self.hdf5_path = hdf5_path
+        self.data_dir = data_dir
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.val_split = val_split
 
     def setup(self, stage=None):
-        dataset = TreeSpeciesDataset(self.hdf5_path)
+        dataset = TreeSpeciesDataset(self.data_dir)
         val_len = int(len(dataset) * self.val_split)
         train_len = len(dataset) - val_len
         self.train_ds, self.val_ds = random_split(dataset, [train_len, val_len])
