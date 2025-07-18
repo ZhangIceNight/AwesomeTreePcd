@@ -57,11 +57,7 @@ class PointNetCls(nn.Module):
     def forward(self, x):
         x = x.transpose(2,1) # from [B,N,C] -> [B,C,N] to fit the previous writing style in PointNet
         B, D, N = x.size()
-        trans = self.stn(x[:, :3, :])
-        x = x.transpose(2, 1)
-        x[:, :, :3] = torch.bmm(x[:, :, :3], trans)
-        x = x.transpose(2, 1)
-
+    
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
         x = self.bn3(self.conv3(x))
