@@ -53,8 +53,7 @@ def train():
     comet_logger = CometLogger(
         project=config.comet.project,
         name=config.comet.get("name"), 
-        api_key=config.comet.get("api_key"), 
-        workspace=config.comet.save_dir
+        offline_directory=config.comet.offline_directory
     )
 
     # Setup Dataset Module

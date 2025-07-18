@@ -19,11 +19,6 @@ trainer:
   default_root_dir: "Results/"
 
 comet:
-  project: "pointnet-classification"
+  project: "treespecies-cls"
   name: "pointnet-baseline"
-  group: "pointnet"
-  tags: ["v1", "xyz"]
-  api_key: "Vi7wFvlcyIijMDTnI81JTNBCm"
-  save_dir: "wandb_logs"
-  log_model: "all"
-  offline: false
+  offline_directory: "Results/comet_logs"
