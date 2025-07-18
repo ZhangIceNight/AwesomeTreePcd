@@ -41,13 +41,9 @@ if __name__ == "__main__":
 
     trainer = pl.Trainer(
         logger=False,  # 禁用 pytorch_lightning 默认的 logger（如 TensorBoard）
-        callbacks=[checkpoint_cb, earlystop_cb],
-        
-        accelerator="gpu",
-        devices=[1],
-        
+        callbacks=[checkpoint_cb, earlystop_cb],        
+   
         **config['trainer']
-
     )
 
     # 添加训练开始日志
