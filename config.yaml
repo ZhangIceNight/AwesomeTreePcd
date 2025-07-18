@@ -1,5 +1,5 @@
 data:
-  hdf5_path: "data/your_pointcloud_data.h5"
+  hdf5_path: "/public/wjzhang/datasets/PLU_AUT_sample1024_xyzlbs.h5"
   batch_size: 32
   num_workers: 4
   val_split: 0.1

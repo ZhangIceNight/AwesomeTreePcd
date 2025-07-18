@@ -39,26 +39,3 @@ class PointCloudModel(pl.LightningModule):
 
 
  
-if __name__ == "__main__":
-    from datasets.tree_dataset import TreeDataModule
-    data_module = TreeDataModule(
-        hdf5_path="data/your_pointcloud_data.h5",
-        batch_size=8,
-        num_workers=0,
-        val_split=0.1
-    )
- 
-    data_module.setup()
- 
-    # 测试 data_loader
-    train_loader = data_module.train_dataloader()
-    batch = next(iter(train_loader))
-    points, labels = batch
- 
-    print("Point cloud batch shape: ", points.shape)   # Should be [B, N, 3]
-    print("Label batch shape: ", labels.shape)         # Should be [B, ]
-    
-    model_hparams = {"num_classes":4}
-    model = PointCloudModel()
-    logits = model(points)
-    print("Model outputs shape: ", logits.shape) # Should be [B, num_classes] → [4, 4]

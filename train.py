@@ -1,7 +1,7 @@
 import yaml
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
-from models.pointnet_model import PointCloudModel
+from models.pointnet_pl import PointCloudModel
 from datasets.tree_dataset import TreeDataModule
 from utils.logger_utils import setup_logger
 
@@ -13,18 +13,19 @@ if __name__ == "__main__":
         config = yaml.safe_load(f)
 
     # 初始化 logger
-    log_file = "training.log"
+    log_file = "Results/training.log"
     logger = setup_logger(log_file)
 
     # Setup Module
     data_module = TreeDataModule(**config['data'])
+    data_module.setup()
 
     # Setup Model
     model = PointCloudModel(model_hparams=config['model'], experiment_params=config)
 
     # Setup Callbacks
     checkpoint_cb = ModelCheckpoint(
-        dirpath="checkpoints/",
+        dirpath="Results/checkpoints/",
         filename="pointnet-{epoch:02d}-{val_loss:.2f}",
         monitor="val_loss",
         save_top_k=1,
