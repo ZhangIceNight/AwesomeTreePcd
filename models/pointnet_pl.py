@@ -17,7 +17,7 @@ class PointCloudModel(pl.LightningModule):
         points, labels = batch
         logits = self.model(points)
         loss = self.loss_fn(logits, labels.squeeze())
-        self.log("train_loss", loss, prog_bar=True)
+        self.log("train_loss", loss, prog_bar=True, logger=True)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -28,8 +28,8 @@ class PointCloudModel(pl.LightningModule):
         accuracy = (preds == labels).float().mean()
 
         # 记录验证损失 & 准确率
-        self.log("val_loss", loss, prog_bar=True)
-        self.log("val_acc", accuracy, prog_bar=True)
+        self.log("val_loss", loss, prog_bar=True, logger=True)
+        self.log("val_acc", accuracy, prog_bar=True, logger=True)
 
         return {
             "val_loss": loss,
