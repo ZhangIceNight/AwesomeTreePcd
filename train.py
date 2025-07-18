@@ -32,16 +32,10 @@ if __name__ == "__main__":
         mode="min"
     )
 
-    earlystop_cb = EarlyStopping(
-        monitor="val_loss",
-        patience=5,
-        verbose=True,
-        mode="min"
-    )
 
     trainer = pl.Trainer(
         logger=False,  # 禁用 pytorch_lightning 默认的 logger（如 TensorBoard）
-        callbacks=[checkpoint_cb, earlystop_cb],        
+        callbacks=[checkpoint_cb],        
    
         **config['trainer']
     )
