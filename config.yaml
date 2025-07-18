@@ -18,12 +18,12 @@ trainer:
   precision: 32
   default_root_dir: "Results/"
 
-wandb:
+comet:
   project: "pointnet-classification"
   name: "pointnet-baseline"
   group: "pointnet"
   tags: ["v1", "xyz"]
-  entity: "zwjnefu"
+  api_key: "Vi7wFvlcyIijMDTnI81JTNBCm"
   save_dir: "wandb_logs"
   log_model: "all"
   offline: false

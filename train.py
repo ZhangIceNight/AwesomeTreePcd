@@ -6,7 +6,7 @@ from easydict import EasyDict as edict
 
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import WandbLogger
+from pytorch_lightning.loggers import CometLogger
 
 from models.pointnet_pl import PointCloudModel
 from datasets.tree_dataset import TreeDataModule
@@ -49,16 +49,12 @@ def train():
     log_file = "Results/training.log"
     logger = setup_logger(log_file)
 
-    # init wandb logger
-    wandb_logger = WandbLogger(
-        project=config.wandb.project,
-        name=config.wandb.get("name"),
-        group=config.wandb.get("group"),
-        tags=config.wandb.get("tags"),
-        entity=config.wandb.get("entity"),
-        save_dir=config.wandb.save_dir,
-        log_model=config.wandb.log_model,
-        offline=config.wandb.offline,
+
+    comet_logger = CometLogger(
+        project=config.comet.project,
+        name=config.comet.get("name"), 
+        api_key=config.comet.get("api_key"), 
+        workspace=config.comet.save_dir
     )
 
     # Setup Dataset Module
@@ -87,7 +83,7 @@ def train():
     )
 
     trainer = pl.Trainer(
-        logger=wandb_logger,
+        logger=comet_logger,
         callbacks=[best_checkpoint_cb, latest_checkpoint_cb],        
         **config['trainer']
     )
