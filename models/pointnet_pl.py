@@ -7,8 +7,8 @@ class PointCloudModel(pl.LightningModule):
     def __init__(self, model_hparams, experiment_params):
         super().__init__()
         self.save_hyperparameters()
-        self.num_classes = model_hparams["num_classes"]
-        self.model = PointNetCls(num_classes=self.num_classes)
+        self.model_hparams = model_hparams
+        self.model = PointNetCls(num_classes=self.model_hparams['num_classes'])
         self.loss_fn = nn.CrossEntropyLoss()
 
     def training_step(self, batch, batch_idx):
