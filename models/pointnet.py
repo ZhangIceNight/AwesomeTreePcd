@@ -9,7 +9,6 @@ class PointNetCls(nn.Module):
     def __init__(self, num_classes=9, normal_channel=False):
         super(PointNetCls, self).__init__()
         in_channel = 6 if normal_channel else 3
-        self.stn = STN3d()
         self.conv1 = nn.Conv1d(in_channel, 64, 1)
         self.conv2 = nn.Conv1d(64, 128, 1)
         self.conv3 = nn.Conv1d(128, 1024, 1)
