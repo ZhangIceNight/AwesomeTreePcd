@@ -1,6 +1,7 @@
 import pytorch_lightning as pl
 import torch
 from torch import optim, nn
+from models.pct import NaivePCT
 from models.pointnet import PointNetCls
 
 class PointCloudModel(pl.LightningModule):
