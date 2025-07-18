@@ -49,3 +49,21 @@ class TreeDataModule(LightningDataModule):
             num_workers=self.num_workers,
             pin_memory=True
         )
+
+if __name__ == "__main__":
+    data_module = TreeDataModule(
+        hdf5_path="/public/wjzhang/datasets/PLU_AUT_sample1024_xyzlbs.h5",
+        batch_size=8,
+        num_workers=0,
+        val_split=0.1
+    )
+ 
+    data_module.setup()
+ 
+    # 测试 data_loader
+    train_loader = data_module.train_dataloader()
+    batch = next(iter(train_loader))
+    points, labels = batch
+ 
+    print("Point cloud batch shape: ", points.shape)   # Should be [B, N, 3]
+    print("Label batch shape: ", labels.shape)         # Should be [B, ]
