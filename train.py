@@ -19,7 +19,7 @@ def train(config: DictConfig):
     log_file = "Results/training.log"
     logger = setup_logger(log_file)
 
-    # print(OmegaConf.to_yaml(config))
+    print(OmegaConf.to_yaml(config))
     comet_logger = CometLogger(
         project=config.comet.project,
         name=config.comet.get("name"), 
