@@ -57,7 +57,7 @@ def train(config: DictConfig):
         **config['trainer']
     )
 
-    if config.model.resume:
+    if config.model.get("resume"):
         print(f"Resuming from checkpoint: {config.model.resume}")
         trainer.fit(model, datamodule=data_module, ckpt_path=config.model.resume)
     else:

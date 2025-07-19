@@ -1,5 +1,5 @@
 defaults:
-  - base_pointnet.yaml
+  - base_pointnet
   - _self_
 data:
   batch_size: 32
