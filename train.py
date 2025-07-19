@@ -11,6 +11,9 @@ from pytorch_lightning.loggers import CometLogger
 from models.pointnet_pl import PointCloudModel
 from datasets.tree_dataset import TreeDataModule
 from utils.logger_utils import setup_logger
+from utils.seed_utils import seed_everything
+
+
 
 def get_args():
     parser = argparse.ArgumentParser(description="Train PointNet with configurable args")
@@ -61,7 +64,7 @@ def train():
     data_module.setup()
 
     # Setup Model
-    model = PointCloudModel(model_hparams=config.model, experiment_params=config)
+    model = PointCloudModel(config)
 
     # Setup Callbacks
     best_checkpoint_cb = ModelCheckpoint(
@@ -96,4 +99,5 @@ def train():
 
 
 if __name__ == "__main__":
+    seed_everything(98)
     train()
