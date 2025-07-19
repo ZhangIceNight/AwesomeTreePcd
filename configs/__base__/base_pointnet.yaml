@@ -1,5 +1,5 @@
 defaults:
-  - __base__.yaml
+  - __base__/__base__.yaml
   - _self_
 
 model:
