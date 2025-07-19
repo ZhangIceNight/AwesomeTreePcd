@@ -1,6 +1,6 @@
 defaults:
-  - _self_
   - __base__/base_pointnet.yaml
+  - _self_
 data:
   batch_size: 32
   num_workers: 4

@@ -1,6 +1,6 @@
 defaults:
-  - _self_
   - __base__.yaml
+  - _self_
 
 model:
   num_classes: 9
