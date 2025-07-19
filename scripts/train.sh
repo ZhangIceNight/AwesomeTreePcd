@@ -29,5 +29,10 @@ HYDRA_ARGS=""
 [ -n "$EPOCHS" ] && HYDRA_ARGS+=" trainer.max_epochs=$EPOCHS"
 [ -n "$LR" ] && HYDRA_ARGS+=" model.learning_rate=$LR"
 
-# 最终执行命令
+
+# get project root dir
+PROJECT_ROOT=$(cd "$(dirname "$0")/.."; pwd)
+export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
+
+cd "$PROJECT_ROOT"
 python train.py --config-name $CONFIG_NAME $HYDRA_ARGS
