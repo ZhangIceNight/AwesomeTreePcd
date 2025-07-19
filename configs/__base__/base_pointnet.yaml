@@ -1,0 +1,17 @@
+defaults:
+  - __base__.yaml
+
+model:
+  num_classes: 9
+  model_type: "pointnet"
+
+optimizer:
+  learning_rate: 0.001
+  weight_decay: 0.00005
+  max_epochs: 50
+  eta_min: 0.000001
+  warmup_epochs: 5
+
+
+comet:
+  name: "pointnet-baseline"

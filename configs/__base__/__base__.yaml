@@ -1,0 +1,15 @@
+data:
+  num_workers: 4
+
+trainer:
+  max_epochs: 50
+  accelerator: "gpu"
+  devices: [1]
+  log_every_n_steps: 1
+  enable_checkpointing: True
+  precision: 32
+  default_root_dir: "Results/"
+
+comet:
+  project: "treespecies-cls"
+  offline_directory: "Results/comet_logs"

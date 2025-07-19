@@ -1,8 +1,8 @@
 import logging
-import yaml
 import os
-import argparse
-from easydict import EasyDict as edict
+
+from omegaconf import DictConfig, OmegaConf
+import hydra
 
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -13,41 +13,8 @@ from datasets.tree_dataset import TreeDataModule
 from utils.logger_utils import setup_logger
 from utils.seed_utils import seed_everything
 
-
-
-def get_args():
-    parser = argparse.ArgumentParser(description="Train PointNet with configurable args")
-    parser.add_argument("--config", type=str, default="config.yaml", help="Path to config YAML file")
-    parser.add_argument("--resume", type=str, default=None, help="Path to checkpoint for resuming")
-    parser.add_argument("--wandb_name", type=str, help="Override wandb run name")
-    parser.add_argument("--batch_size", type=int, help="Override data.batch_size")
-    parser.add_argument("--epochs", type=int, help="Override trainer.max_epochs")
-    parser.add_argument("--lr", type=float, help="Override model.learning_rate")
- 
-    return parser.parse_args()
-
-def load_config(config_path):
-    with open(config_path, 'r') as f:
-        config = yaml.safe_load(f)
-    return edict(config)
-
-def override_config(config, args):
-    if args.batch_size:
-        config.data.batch_size = args.batch_size
-    if args.epochs:
-        config.trainer.max_epochs = args.epochs
-    if args.lr:
-        config.model.learning_rate = args.lr
-    if args.wandb_name:
-        config.wandb.name = args.wandb_name
-    return config
-
-def train():
-    args = get_args()
-
-    config = load_config(args.config)
-    config = override_config(config, args)
-    
+@hydra.main(config_path="configs", config_name="PLU_AUT_pointnet_lr1e-3_bs32", version_base=None)
+def train(config: DictConfig):
     # 初始化 logger
     log_file = "Results/training.log"
     logger = setup_logger(log_file)
@@ -90,9 +57,9 @@ def train():
         **config['trainer']
     )
 
-    if args.resume:
-        print(f"Resuming from checkpoint: {args.resume}")
-        trainer.fit(model, datamodule=data_module, ckpt_path=args.resume)
+    if config.model.resume:
+        print(f"Resuming from checkpoint: {config.model.resume}")
+        trainer.fit(model, datamodule=data_module, ckpt_path=config.model.resume)
     else:
         print("Training from scratch")
         trainer.fit(model, datamodule=data_module)

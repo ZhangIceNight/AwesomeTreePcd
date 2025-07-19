@@ -1,8 +1,10 @@
+defaults:
+  - __base__/base_pointnet.yaml
 data:
-  data_dir: "/public/wjzhang/datasets/PLU_AUT_sample1024_xyzlbs.h5"
   batch_size: 32
   num_workers: 4
   val_split: 0.1
+  data_dir: "/public/wjzhang/datasets/PLU_AUT_sample1024_xyzlbs.h5"
 
 model:
   num_classes: 9
@@ -14,16 +16,12 @@ optimizer:
   max_epochs: 50
   eta_min: 0.000001
   warmup_epochs: 5
+
 trainer:
   max_epochs: 50
   accelerator: "gpu"
   devices: [1]
-  log_every_n_steps: 1
-  enable_checkpointing: True
-  precision: 32
-  default_root_dir: "Results/"
 
 comet:
-  project: "treespecies-cls"
-  name: "pointnet-baseline"
+  name: "PLU_AUT_pointnet_lr1e-3_bs32"
   offline_directory: "Results/comet_logs"
