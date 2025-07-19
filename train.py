@@ -99,5 +99,5 @@ def train():
 
 
 if __name__ == "__main__":
-    seed_everything(42)
+    # seed_everything(42)
     train()
