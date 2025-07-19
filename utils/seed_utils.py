@@ -5,6 +5,7 @@ import os
 
 def seed_everything(seed=42):
     os.environ['PYTHONHASHSEED'] = str(seed)
+    os.environ['CUBLAS_WORKSPACE_CONFIG'] = ':16:8'
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)  # for multi-GPU
