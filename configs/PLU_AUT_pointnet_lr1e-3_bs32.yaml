@@ -5,9 +5,9 @@ data:
   batch_size: 32
   num_workers: 4
   val_split: 0.1
-  data_dir: "/public/wjzhang/datasets/PLU_AUT_sample1024_xyzlbs.h5"
+  data_dir: "/public/wjzhang/datasets/PLU_AUT_sample1024_xyzlbs_5fold.h5"
   augmentations_list: ['rotate', 'scale', 'shift']
-  
+
 model:
   num_classes: 9
   model_type: "pointnet"
