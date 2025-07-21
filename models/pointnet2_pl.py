@@ -1,7 +1,7 @@
 import pytorch_lightning as pl
 import torch
 from torch import optim, nn
-from .pointnet2 import PointNet2
+from .pointnet2 import PointNet2Cls
 from torch.optim.lr_scheduler import LinearLR, CosineAnnealingLR, SequentialLR
 
 class PointNet2_pl(pl.LightningModule):
