@@ -45,7 +45,7 @@ class TreeSpeciesDataset(Dataset):
         return torch.as_tensor(point_cloud).float(), torch.as_tensor(label).long()
 
 class TreeDataModule(LightningDataModule):
-    def __init__(self, data_dir, batch_size=32, fold_idx=0, num_workers=4, use_normalization=False, augmentations_list=None):
+    def __init__(self, data_dir, batch_size=32, fold_idx=0, num_workers=4, use_normalization=False, augmentations_list=None, **kwargs):
         super().__init__()
         self.data_dir = data_dir
         self.batch_size = batch_size
