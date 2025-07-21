@@ -17,6 +17,7 @@ while [[ "$#" -gt 0 ]]; do
         --resume) RESUME="$2"; shift ;;
         --epochs) EPOCHS="$2"; shift ;;
         --lr) LR="$2"; shift ;;
+        --fold) FOLD_NUM="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -36,7 +37,7 @@ export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
 
 cd "$PROJECT_ROOT"
 
-for fold in 1 2 3 4 5; do
+for fold in $(seq 0 $((FOLD_NUM-1)) ); do
     HYDRA_ARGS+=" data.fold_idx=$fold"
     python train.py --config-name $CONFIG_NAME $HYDRA_ARGS
 done
