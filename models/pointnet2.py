@@ -20,7 +20,7 @@ class PointNet2(nn.Module):
         self.conv2 = nn.Conv1d(128, num_classes, 1)
 
     def forward(self, xyz):
-        x = x.transpose(2,1) # from [B,N,C] -> [B,C,N] to fit the previous writing style in PointNet
+        xyz = xyz.transpose(2,1) # from [B,N,C] -> [B,C,N] to fit the previous writing style in PointNet
 
         # Set Abstraction layers
         B,C,N = xyz.shape
