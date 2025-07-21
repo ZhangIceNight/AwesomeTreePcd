@@ -46,11 +46,11 @@ def setup_logger(log_file='training.log'):
 
 
 
-def create_experiment_dir(root_dir="Results", model_dir=None):
+def create_experiment_dir(root_dir="Results", model_dir=None, fold_idx=0):
     # 创建时间戳目录
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    exp_dir = os.path.join(root_dir, model_dir, f"exp_{timestamp}")
+    exp_dir = os.path.join(root_dir, model_dir, f"fold_{fold_idx}", f"exp_{timestamp}")
 
     # 创建子目录
     ckpt_dir = os.path.join(exp_dir, "checkpoints")
