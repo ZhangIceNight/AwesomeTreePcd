@@ -42,7 +42,7 @@ class TreeSpeciesDataset(Dataset):
         if self.use_normalization:
             point_cloud = augmentations.pc_normalize(point_cloud)
  
-        return torch.as_tensor(point_cloud).long(), torch.as_tensor(label).long()
+        return torch.as_tensor(point_cloud).float(), torch.as_tensor(label).long()
 
 class TreeDataModule(LightningDataModule):
     def __init__(self, data_dir, batch_size=32, fold_idx=0, num_workers=4, use_normalization=False, augmentations_list=None):
