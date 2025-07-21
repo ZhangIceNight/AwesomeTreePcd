@@ -19,3 +19,16 @@
 #     return model_factory[model_name](**kwargs)
 
 
+
+from .pointnet2_pl import PointNet2_pl
+from .pointnet_pl import PointNet_pl
+
+model_dict = {
+    'pointnet2': PointNet2_pl,
+    'pointnet': PointNet_pl,
+}
+
+def build_model(config):
+    model_type = config.model.model_type
+    model_class = model_dict[model_type]
+    return model_class(config)

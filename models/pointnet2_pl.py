@@ -4,7 +4,7 @@ from torch import optim, nn
 from .pointnet2 import PointNet2
 from torch.optim.lr_scheduler import LinearLR, CosineAnnealingLR, SequentialLR
 
-class PointCloudModel(pl.LightningModule):
+class PointNet2_pl(pl.LightningModule):
     def __init__(self, config):
         super().__init__()
         self.model_hparams = config.model

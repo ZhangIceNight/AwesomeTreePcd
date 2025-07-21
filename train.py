@@ -10,7 +10,7 @@ import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import CometLogger
 
-from models.pointnet_pl import PointCloudModel
+from models import build_model
 from datasets.tree_dataset import TreeDataModule
 from utils.logger_utils import setup_logger, create_experiment_dir
 from utils.seed_utils import seed_everything
@@ -49,7 +49,7 @@ def train(config: DictConfig):
     data_module.setup()
 
     # Setup Model
-    model = PointCloudModel(config)
+    model = build_model(config)
 
     # Setup Callbacks
     best_checkpoint_cb = ModelCheckpoint(
