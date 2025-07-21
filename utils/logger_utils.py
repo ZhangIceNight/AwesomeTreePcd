@@ -19,6 +19,8 @@ class LoggerWriter:
 
 
 def setup_logger(log_file='training.log'):
+    logging.shutdown()  # 清理旧的 handlers
+    logging.getLogger().handlers.clear()  # 清除缓存中的 handlers
     # 创建目录
     os.makedirs(os.path.dirname(log_file), exist_ok=True)
  
