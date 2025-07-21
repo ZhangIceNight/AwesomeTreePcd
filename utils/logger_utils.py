@@ -19,32 +19,27 @@ class LoggerWriter:
 
 
 def setup_logger(log_file='training.log'):
+    # 创建目录
     os.makedirs(os.path.dirname(log_file), exist_ok=True)
-
+ 
     # 创建 logger
     logger = logging.getLogger('PointCloudTraining')
     logger.setLevel(logging.INFO)
-
-    # 避免重复添加 handler（应对 PyTorch Lightning 多次调用）
+ 
+    # 避免重复添加 handler
     if not logger.handlers:
-        # 文件输出
+        # 文件 handler：记录到日志文件
         file_handler = logging.FileHandler(log_file, mode='w')
-        # 控制台输出
-        console_handler = logging.StreamHandler(sys.stdout)
-
-        # 日志格式
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-        file_handler.setFormatter(formatter)
-        console_handler.setFormatter(formatter)
-
-        # 添加 handler
+        file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        file_handler.setFormatter(file_formatter)
         logger.addHandler(file_handler)
+ 
+        # 终端 handler：输出到 stderr（这样 lightning 的进度条不会受到影响）
+        console_handler = logging.StreamHandler(sys.stderr)  # 👈 改成 stderr
+        console_formatter = logging.Formatter('%(levelname)s: %(message)s')
+        console_handler.setFormatter(console_formatter)
         logger.addHandler(console_handler)
-
-    # ✅ 将 print 输出和标准错误也写入日志文件
-    sys.stdout = LoggerWriter(logger, logging.INFO)
-    sys.stderr = LoggerWriter(logger, logging.ERROR)
-
+ 
     return logger
 
 

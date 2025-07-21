@@ -1,3 +1,5 @@
+import comet_ml
+
 import logging
 import os
 
@@ -20,7 +22,7 @@ def train(config: DictConfig):
         model_dir=config.model.model_type)
     
         # 初始化 logger
-    log_file = os.path.join(log_dir, "Results/training.log")
+    log_file = os.path.join(log_dir, "training.log")
     logger = setup_logger(log_file)
 
     # 保存当前 config 到实验目录
