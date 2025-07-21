@@ -9,7 +9,7 @@ class PointNet2_pl(pl.LightningModule):
         super().__init__()
         self.model_hparams = config.model
         self.opt_hparams = config.optimizer
-        self.model = PointNet2(num_classes=self.model_hparams['num_classes'])
+        self.model = PointNet2Cls(num_classes=self.model_hparams['num_classes'])
         self.loss_fn = nn.CrossEntropyLoss()
 
         self.save_hyperparameters()
