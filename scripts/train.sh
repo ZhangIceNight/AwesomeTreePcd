@@ -35,4 +35,8 @@ PROJECT_ROOT=$(cd "$(dirname "$0")/.."; pwd)
 export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
 
 cd "$PROJECT_ROOT"
-python train.py --config-name $CONFIG_NAME $HYDRA_ARGS
+
+for fold in 1 2 3 4 5; do
+    HYDRA_ARGS+=" data.fold_idx=$fold"
+     train.py --config-name $CONFIG_NAME $HYDRA_ARGS
+done

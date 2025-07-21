@@ -18,11 +18,7 @@ from utils.seed_utils import seed_everything
 
 @hydra.main(config_path="configs", config_name="PLU_AUT_pointnet_lr1e-3_bs32", version_base=None)
 def train(config: DictConfig):
-    for fold in range(1,6):
-        train_one_fold(config, fold)
-
-
-def train_one_fold(config, fold):
+    fold = config.data.fold_idx
     exp_dir, ckpt_dir, comet_dir, log_dir = create_experiment_dir(
         root_dir=config.trainer.default_root_dir, 
         dataset_type=config.data.dataset_type,
