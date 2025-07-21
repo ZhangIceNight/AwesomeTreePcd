@@ -20,7 +20,7 @@ def train(config: DictConfig):
     for fold in range(5):
         exp_dir, ckpt_dir, comet_dir, log_dir = create_experiment_dir(
             root_dir=config.trainer.default_root_dir, 
-            dataset_type=config.data.dataset_type
+            dataset_type=config.data.dataset_type,
             model_dir=config.model.model_type,
             fold_idx=fold
             )
