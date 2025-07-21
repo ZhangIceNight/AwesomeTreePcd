@@ -1,5 +1,5 @@
 defaults:
-  - base_pointnet
+  - base_pointnet2
   - _self_
 data:
   batch_size: 32
@@ -8,10 +8,10 @@ data:
   augmentations_list: ['rotate', 'scale', 'shift']
   fold_idx: 0
   dataset_type: PLU
-
+  
 model:
   num_classes: 9
-  model_type: "pointnet"
+  model_type: "pointnet2"
 
 optimizer:
   learning_rate: 0.001
@@ -26,4 +26,4 @@ trainer:
   devices: [1]
 
 comet:
-  name: "PLU_AUT_pointnet_lr1e-3_bs32"
+  name: "PLU_AUT_pointnet2_lr1e-3_bs32"
