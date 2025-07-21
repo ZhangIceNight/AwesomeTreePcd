@@ -38,5 +38,5 @@ cd "$PROJECT_ROOT"
 
 for fold in 1 2 3 4 5; do
     HYDRA_ARGS+=" data.fold_idx=$fold"
-     train.py --config-name $CONFIG_NAME $HYDRA_ARGS
+    train.py --config-name $CONFIG_NAME $HYDRA_ARGS
 done
