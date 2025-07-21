@@ -10,20 +10,27 @@ from pytorch_lightning.loggers import CometLogger
 
 from models.pointnet_pl import PointCloudModel
 from datasets.tree_dataset import TreeDataModule
-from utils.logger_utils import setup_logger
+from utils.logger_utils import setup_logger, create_experiment_dir
 from utils.seed_utils import seed_everything
 
 @hydra.main(config_path="configs", config_name="PLU_AUT_pointnet_lr1e-3_bs32", version_base=None)
 def train(config: DictConfig):
-    # 初始化 logger
-    log_file = "Results/training.log"
+    exp_dir, ckpt_dir, comet_dir, log_dir = create_experiment_dir(
+        root_dir=config.trainer.default_root_dir, 
+        model_dir=config.model.model_type)
+    
+        # 初始化 logger
+    log_file = os.path.join(log_dir, "Results/training.log")
     logger = setup_logger(log_file)
 
+    # 保存当前 config 到实验目录
+    OmegaConf.save(config, os.path.join(exp_dir, "config.yaml"))
     print(OmegaConf.to_yaml(config))
+
     comet_logger = CometLogger(
         project=config.comet.project,
         name=config.comet.get("name"), 
-        offline_directory=config.comet.offline_directory
+        offline_directory=comet_dir
     )
 
     # Setup Dataset Module
@@ -35,7 +42,7 @@ def train(config: DictConfig):
 
     # Setup Callbacks
     best_checkpoint_cb = ModelCheckpoint(
-        dirpath="Results/checkpoints/",
+        dirpath=ckpt_dir,
         filename="pointnet-{epoch:02d}-val_acc{val_acc:.2f}",
         monitor="val_acc",
         save_top_k=1,
@@ -44,7 +51,7 @@ def train(config: DictConfig):
     )
 
     latest_checkpoint_cb = ModelCheckpoint(
-        dirpath="Results/checkpoints/",
+        dirpath=ckpt_dir,
         filename="pointnet-latest",
         save_top_k=1,
         every_n_epochs=1,
