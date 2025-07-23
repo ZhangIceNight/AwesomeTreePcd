@@ -82,7 +82,7 @@ class TransformerSA(nn.Module):
         return x
 
 
-class NaivePCT(nn.Module):
+class NaivePCTCls(nn.Module):
     def __init__(self):
         super().__init__()
 
@@ -100,6 +100,7 @@ class NaivePCT(nn.Module):
         )
     
     def forward(self, x):
+        xyz = xyz.transpose(2,1) # from [B,N,C] -> [B,C,N] to fit the previous writing style in PointNet
         x = self.embedding(x)
         x = x.transpose(-1, -2)
         

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./train.sh --config-name PLU_AUT_pointnet_lr1e-3_bs32 --epochs 50 --lr 0.0001
+# ./train.sh --config-name PLU_AUT_pointnet_lr1e-3_bs32 --epochs 50 --lr 0.0001 --fold 5
 
 # 默认参数
 CONFIG_NAME="default"
