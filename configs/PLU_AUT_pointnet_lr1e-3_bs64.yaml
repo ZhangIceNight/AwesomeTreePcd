@@ -2,7 +2,7 @@ defaults:
   - base_pointnet
   - _self_
 data:
-  batch_size: 32
+  batch_size: 64
   num_workers: 4
   data_dir: "/public/wjzhang/datasets/PLU_AUT_sample1024_xyzlbs_5fold.h5"
   augmentations_list: ['rotate', 'scale', 'shift']
