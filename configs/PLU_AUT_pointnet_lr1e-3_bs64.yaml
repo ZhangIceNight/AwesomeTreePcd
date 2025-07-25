@@ -26,4 +26,4 @@ trainer:
   devices: [1]
 
 comet:
-  name: "PLU_AUT_pointnet_lr1e-3_bs32"
+  name: "PLU_AUT_pointnet_lr1e-3_bs64"
